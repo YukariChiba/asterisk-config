@@ -1,0 +1,3 @@
+pjsip/auth/*.conf
+iax_local.conf
+voicemail_local.conf
