@@ -29,3 +29,4 @@
 ## Special (8xxx)
 
 - 8001: Voice Mail Box
+- 8100: NAT from PSTN
