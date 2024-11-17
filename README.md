@@ -7,9 +7,16 @@
 - 0011: phone
 - 0012: lpc
 
+### Gensokyo Home (002x)
+
+- 0021: phone 1
+- 0022: phone 2
+
 ## Test Phones (99xx)
 
 - 9901: Yukari Chiba Test Phone (Test Only)
+- 9902: Test Modem 1
+- 9903: Test Modem 2
 
 ## Programs (3xxx)
 
