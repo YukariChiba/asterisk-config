@@ -30,17 +30,28 @@ def verify_enum(caller_id, real_ip_str):
         regexp_match = re.search(r'!sip:.*?@(.*?)!', rdata.regexp.decode())
         if not regexp_match:
             continue
-        
-        domain_or_ip = regexp_match.group(1).split(';')[0]
+
+        raw_host_port = regexp_match.group(1).split(';')[0]
+        clean_host = raw_host_port
+
+        if raw_host_port.startswith('['):
+            end_bracket = raw_host_port.find(']')
+            if end_bracket != -1:
+                clean_host = raw_host_port[1:end_bracket]
+        else:
+            if raw_host_port.count(':') == 1:
+                clean_host = raw_host_port.split(':')[0]
+            else:
+                clean_host = raw_host_port
 
         try:
-            target_ip = ipaddress.ip_address(domain_or_ip)
+            target_ip = ipaddress.ip_address(clean_host)
             if real_ip == target_ip:
                 return "PASS"
         except ValueError:
             try:
                 try:
-                    a_records = dns.resolver.resolve(domain_or_ip, 'A')
+                    a_records = dns.resolver.resolve(clean_host, 'A')
                     for a in a_records:
                         if real_ip == ipaddress.ip_address(a.to_text()):
                             return "PASS"
@@ -48,7 +59,7 @@ def verify_enum(caller_id, real_ip_str):
                     pass
 
                 try:
-                    aaaa_records = dns.resolver.resolve(domain_or_ip, 'AAAA')
+                    aaaa_records = dns.resolver.resolve(clean_host, 'AAAA')
                     for aaaa in aaaa_records:
                         if real_ip == ipaddress.ip_address(aaaa.to_text()):
                             return "PASS"

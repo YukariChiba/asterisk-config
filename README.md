@@ -18,6 +18,7 @@
 - 9902: Test Modem 1
 - 9903: Test Modem 2
 - 9910: WebRTC Test
+- 9911: ENUM Test
 
 ## Programs (3xxx)
 
