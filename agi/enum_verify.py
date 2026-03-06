@@ -21,8 +21,11 @@ def verify_enum(caller_id, real_ip_str):
         return "ERROR_INVALID_NUMBER"
     enum_domain = '.'.join(reversed(list(clean_number))) + ".e164.dn42"
 
+    dn42_resolver = dns.resolver.Resolver()
+    dn42_resolver.nameservers = ['172.20.0.53', '172.23.0.53', 'fd42:d42:d42:54::1', 'fd42:d42:d42:53::1']
+
     try:
-        answers = dns.resolver.resolve(enum_domain, 'NAPTR')
+        answers = dn42_resolver.resolve(enum_domain, 'NAPTR')
     except Exception:
         return "NO_ENUM_RECORD"
 
@@ -51,7 +54,7 @@ def verify_enum(caller_id, real_ip_str):
         except ValueError:
             try:
                 try:
-                    a_records = dns.resolver.resolve(clean_host, 'A')
+                    a_records = dn42_resolver.resolve(clean_host, 'A')
                     for a in a_records:
                         if real_ip == ipaddress.ip_address(a.to_text()):
                             return "PASS"
@@ -59,7 +62,7 @@ def verify_enum(caller_id, real_ip_str):
                     pass
 
                 try:
-                    aaaa_records = dns.resolver.resolve(clean_host, 'AAAA')
+                    aaaa_records = dn42_resolver.resolve(clean_host, 'AAAA')
                     for aaaa in aaaa_records:
                         if real_ip == ipaddress.ip_address(aaaa.to_text()):
                             return "PASS"
