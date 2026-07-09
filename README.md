@@ -41,8 +41,7 @@
 
 ### Dialup (41XX)
 
-- 4101: Dialup Bell 103 1
-- 4102: Dialup V.32 N3 1
+- 410X: Main Dialup Server
 
 ## Musics (5XXX)
 
