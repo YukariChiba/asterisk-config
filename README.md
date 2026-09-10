@@ -13,6 +13,10 @@
 - 0021: phone 1
 - 0022: phone 2
 
+### Hacker Home (005X)
+
+- 0051: phone
+
 ## Programs (3xxx)
 
 ### echo (300X)
